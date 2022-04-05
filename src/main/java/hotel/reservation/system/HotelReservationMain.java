@@ -12,17 +12,17 @@ public class HotelReservationMain {
         //In this we are adding and displaying the hotel details.
 
         HotelReservation hotelReservation = new HotelReservation();
-        hotelReservation.addHotel("Lakewood", 3, 110,90);
-        hotelReservation.addHotel("Bridgewood", 4, 160,50);
-        hotelReservation.addHotel("Ridgewood", 5, 220,150);
+        hotelReservation.addHotel("Lakewood", 3, 110, 90);
+        hotelReservation.addHotel("Bridgewood", 4, 160, 50);
+        hotelReservation.addHotel("Ridgewood", 5, 220, 150);
         hotelReservation.printHotelList();
 
         //Defining Start Date and End Date
 
-        LocalDate startDate = LocalDate.of(2020, Month.SEPTEMBER, 10);
-        LocalDate endDate = LocalDate.of(2020, Month.SEPTEMBER, 11);
+        LocalDate startDate = LocalDate.of(2020, Month.SEPTEMBER, 11);
+        LocalDate endDate = LocalDate.of(2020, Month.SEPTEMBER, 12);
 
-        Hotel hotel = hotelReservation.getCheapestHotel(startDate, endDate);
+        String hotel = hotelReservation.getCheapestHotel(startDate, endDate);
         System.out.println("The cheapest hotel is : " + hotel);
     }
 }

@@ -1,9 +1,10 @@
 package hotel.reservation.system;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * We have created this class to add the services of the hotel
@@ -44,14 +45,44 @@ public class HotelReservation {
 
     /**
      * Method to find the cheapest hotel.
-     * In this we are using the ChronoUnit to get the date
-     * Then we are comparing the regular cost of the hotel and finding the cheapest hotel
-     * We are using the min method to get the list of minimum cost.
+     * Using ChronoUnit to get the dates
+     * Finding no. of weekdays and weekends using switch cases on DAY_OF_WEEK.
+     * Comparing the rate by formula(weekdays*week days rate)+(weekends*weekend rates)
      */
-    public Hotel getCheapestHotel(LocalDate startDate, LocalDate endDate) {
+    public String getCheapestHotel(LocalDate startDate, LocalDate endDate) {
 
-        long numberOfDays = ChronoUnit.DAYS.between(startDate, endDate);
-        Optional<Hotel> sortedHotelList = hotelList.stream().min(Comparator.comparing(Hotel::getWeekendRegularCustomerRate));
-        return sortedHotelList.get();
+        int numberOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
+        int weekends = 0;
+
+        while (startDate.compareTo(endDate) != 0) {
+            switch (DayOfWeek.of(startDate.get(ChronoField.DAY_OF_WEEK))) {
+                case SATURDAY:
+                    ++weekends;
+                    break;
+                case SUNDAY:
+                    ++weekends;
+                    break;
+            }
+            startDate = startDate.plusDays(1);
+        }
+
+        final int weekdaysNumber = numberOfDays - weekends;
+        final int weekendsNumber = weekends;
+
+        final double cheapestPrice = hotelList.stream()
+                .mapToDouble(hotel -> ((hotel.getWeekendRegularCustomerRate() * weekendsNumber) + hotel.getWeekdayRegularCustomerRate() * weekdaysNumber))
+                .min()
+                .orElse(Double.MAX_VALUE);
+
+        ArrayList<Hotel> cheapestHotel = hotelList.stream()
+                .filter(hotel -> (hotel.getWeekendRegularCustomerRate() * weekendsNumber + hotel.getWeekdayRegularCustomerRate() * weekdaysNumber) == cheapestPrice)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        if (cheapestPrice != Double.MAX_VALUE) {
+
+            System.out.println("Cheapest Hotel : \n" + cheapestHotel.get(0).getHotelName() + ", Total Rates: " + cheapestPrice);
+            return cheapestHotel.get(0).getHotelName();
+        }
+        return null;
     }
 }
