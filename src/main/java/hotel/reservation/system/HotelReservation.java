@@ -1,31 +1,57 @@
 package hotel.reservation.system;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * We have created this class to add the services of the hotel
+ *  In this method we will add the hotel to the ArrayList
+ *  To display the hotel name and the details
+ */
 public class HotelReservation {
-    Map<String, Hotel> hotelCheck = new HashMap<>();
 
-    public static void main(String[] args) {
+    ArrayList<Hotel> hotelList = new ArrayList<Hotel>();
 
-        System.out.println("Welcome to the Hotel reservation system");
-    }
-
-    public boolean addHotel(String hotelName,int hotelRating) {
+    public void addHotel(String hotelName, int rating, double regularCustomerRate) {
         Hotel hotel = new Hotel();
         hotel.setHotelName(hotelName);
-        hotel.setHotelRating(hotelRating);
-        hotelCheck.put(hotelName,hotel);
+        hotel.setRating(rating);
+        hotel.setRegularCustomerRate(regularCustomerRate);
 
-        return true;
+        hotelList.add(hotel);
     }
 
-    public void printHotelDetails() {
-        for (Map.Entry<String, Hotel> hotelEntry : hotelCheck.entrySet()) {
-            String key = hotelEntry.getKey();
-            Hotel value = hotelEntry.getValue();
-            System.out.println("\nKey : " + key);
-            System.out.println(" Hotel Name : " + value.hotelName + "Hotel Rating: " + value.hotelRating);
-        }
+    // To display the hotel name and the details
+
+    public void displayHotel() {
+        System.out.println(hotelList);
+
+    }
+
+    public int getHotelListSize() {
+        return hotelList.size();
+    }
+
+    public void printHotelList() {
+        System.out.println(hotelList);
+    }
+
+    public ArrayList<Hotel> getHotelList() {
+        return hotelList;
+    }
+
+    /**
+     * Method to find the cheapest hotel.
+     * In this we are using the ChronoUnit to get the date
+     * Then we are comparing the regular cost of the hotel and finding the cheapest hotel
+     * We are using the min method to get the list of minimum cost.
+     */
+    public Hotel getCheapestHotel(LocalDate startDate, LocalDate endDate) {
+
+        long numberOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+        Optional<Hotel> sortedHotelList = hotelList.stream().min(Comparator.comparing(Hotel::getRegularCustomerRate));
+        return sortedHotelList.get();
     }
 }
