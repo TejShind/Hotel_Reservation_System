@@ -12,9 +12,9 @@ public class HotelReservationMain {
         //In this we are adding and displaying the hotel details.
 
         HotelReservation hotelReservation = new HotelReservation();
-        hotelReservation.addHotel("Lakewood", 3, 110);
-        hotelReservation.addHotel("Bridgewood", 4, 160);
-        hotelReservation.addHotel("Ridgewood", 5, 220);
+        hotelReservation.addHotel("Lakewood", 3, 110,90);
+        hotelReservation.addHotel("Bridgewood", 4, 160,50);
+        hotelReservation.addHotel("Ridgewood", 5, 220,150);
         hotelReservation.printHotelList();
 
         //Defining Start Date and End Date

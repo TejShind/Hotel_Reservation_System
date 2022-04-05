@@ -14,12 +14,12 @@ public class HotelReservation {
 
     ArrayList<Hotel> hotelList = new ArrayList<Hotel>();
 
-    public void addHotel(String hotelName, int rating, double regularCustomerRate) {
+    public void addHotel(String hotelName, int rating, double weekdayRegularCustomerRate, double weekendRegularCustomerRate) {
         Hotel hotel = new Hotel();
         hotel.setHotelName(hotelName);
         hotel.setRating(rating);
-        hotel.setRegularCustomerRate(regularCustomerRate);
-
+        hotel.setWeekdayRegularCustomerRate(weekdayRegularCustomerRate);
+        hotel.setWeekendRegularCustomerRate(weekendRegularCustomerRate);
         hotelList.add(hotel);
     }
 
@@ -51,7 +51,7 @@ public class HotelReservation {
     public Hotel getCheapestHotel(LocalDate startDate, LocalDate endDate) {
 
         long numberOfDays = ChronoUnit.DAYS.between(startDate, endDate);
-        Optional<Hotel> sortedHotelList = hotelList.stream().min(Comparator.comparing(Hotel::getRegularCustomerRate));
+        Optional<Hotel> sortedHotelList = hotelList.stream().min(Comparator.comparing(Hotel::getWeekendRegularCustomerRate));
         return sortedHotelList.get();
     }
 }
