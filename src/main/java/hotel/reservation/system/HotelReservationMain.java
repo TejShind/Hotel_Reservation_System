@@ -22,7 +22,7 @@ public class HotelReservationMain {
         LocalDate startDate = LocalDate.of(2020, Month.SEPTEMBER, 11);
         LocalDate endDate = LocalDate.of(2020, Month.SEPTEMBER, 12);
 
-        String hotel = hotelReservation.getCheapestHotel(startDate, endDate);
-        System.out.println("The cheapest hotel is : " + hotel);
+        Hotel hotelName = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
+        System.out.println("The cheapest hotel is : " + hotelName);
     }
 }

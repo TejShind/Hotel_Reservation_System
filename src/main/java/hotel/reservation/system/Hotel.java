@@ -20,6 +20,7 @@ public class Hotel {
     }
 
     public void setHotelName(String hotelName) {
+
         this.hotelName = hotelName;
     }
 
@@ -52,6 +53,7 @@ public class Hotel {
     }
 
     public double getWeekendRegularCustomerRate() {
+
         return weekendRegularCustomerRate;
     }
 

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +38,7 @@ public class HotelReservation {
     }
 
     public void printHotelList() {
+
         System.out.println(hotelList);
     }
 
@@ -49,7 +52,7 @@ public class HotelReservation {
      * Finding no. of weekdays and weekends using switch cases on DAY_OF_WEEK.
      * Comparing the rate by formula(weekdays*week days rate)+(weekends*weekend rates)
      */
-    public String getCheapestHotel(LocalDate startDate, LocalDate endDate) {
+    public ArrayList<Hotel> getCheapestHotel(LocalDate startDate, LocalDate endDate) {
 
         int numberOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate);
         int weekends = 0;
@@ -61,6 +64,18 @@ public class HotelReservation {
                     break;
                 case SUNDAY:
                     ++weekends;
+                    break;
+                case FRIDAY:
+                    break;
+                case MONDAY:
+                    break;
+                case THURSDAY:
+                    break;
+                case TUESDAY:
+                    break;
+                case WEDNESDAY:
+                    break;
+                default:
                     break;
             }
             startDate = startDate.plusDays(1);
@@ -81,8 +96,17 @@ public class HotelReservation {
         if (cheapestPrice != Double.MAX_VALUE) {
 
             System.out.println("Cheapest Hotel : \n" + cheapestHotel.get(0).getHotelName() + ", Total Rates: " + cheapestPrice);
-            return cheapestHotel.get(0).getHotelName();
+            return cheapestHotel;
         }
         return null;
+
+    }
+
+    public Hotel getCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate) {
+
+        ArrayList<Hotel> cheapestHotels = getCheapestHotel(startDate, endDate);
+        Optional<Hotel> sortedHotelList = hotelList.stream().max(Comparator.comparing(Hotel::getRating));
+        System.out.println("Cheapest Best Rated Hotel : \n" + sortedHotelList.get().getHotelName());
+        return sortedHotelList.get();
     }
 }

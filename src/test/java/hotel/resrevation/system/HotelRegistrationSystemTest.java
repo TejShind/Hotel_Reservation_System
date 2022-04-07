@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 
 public class HotelRegistrationSystemTest {
 
@@ -44,15 +45,27 @@ public class HotelRegistrationSystemTest {
         hotelReservation.addHotel("Bridgewood", 4, 160, 50);
         LocalDate startDate = LocalDate.of(2020, Month.SEPTEMBER, 10);
         LocalDate endDate = LocalDate.of(2020, Month.SEPTEMBER, 11);
-        String hotelName = hotelReservation.getCheapestHotel(startDate, endDate);
+        ArrayList<Hotel> hotelName = hotelReservation.getCheapestHotel(startDate, endDate);
         Assert.assertEquals("Lakewood", hotelName);
     }
 
     @Test
     public void givenHotelList_WhenAdded_shouldReturnProperHotelWeekendRegularCustomerCost() {
-        hotelReservation.addHotel("Bridgewood", 4, 150,50);
+        hotelReservation.addHotel("Bridgewood", 4, 150, 50);
         int hotelRegularCustomerRate = (int) hotelReservation.getHotelList().get(0).getWeekendRegularCustomerRate();
         Assert.assertEquals(50, hotelRegularCustomerRate);
+    }
+
+    @Test
+    public void givenHotelDetails_HotelPricesAreSame_shouldReturnHighestRatedHotel() {
+
+        HotelReservation hotelReservation = new HotelReservation();
+        hotelReservation.addHotel("Lackwood", 3, 80, 90);
+        hotelReservation.addHotel("Bridgewood", 4, 110, 60);
+        LocalDate startDate = LocalDate.of(2021, Month.SEPTEMBER, 11);
+        LocalDate endDate = LocalDate.of(2021, Month.SEPTEMBER, 12);
+        Hotel hotel = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
+        Assert.assertEquals("Bridgewood", hotel.getHotelName());
     }
 }
 
