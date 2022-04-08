@@ -24,5 +24,8 @@ public class HotelReservationMain {
 
         Hotel hotelName = hotelReservation.getCheapestBestRatedHotel(startDate, endDate);
         System.out.println("The cheapest hotel is : " + hotelName);
+
+        Hotel bestRatedHotel = hotelReservation.getBestRatedHotel(startDate, endDate);
+        System.out.println("The best rated hotel is : \n " + bestRatedHotel);
     }
 }

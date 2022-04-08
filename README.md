@@ -8,3 +8,4 @@
 7.Ability to find the cheapest best rated hotel,Hotel for a given Date Range
 - I/P – 11Sep2020, 12Sep2020
 - O/P – Bridgewood, Rating: 4 and Total Rates: $200
+- 8.Find Best rated hotel.
